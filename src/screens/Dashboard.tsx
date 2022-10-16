@@ -15,7 +15,7 @@ const Dashboard: React.FC = ({ navigation }: any) => {
   const [TotalStreak, setTotalStreak] = useState(10);
   const [Succeed, setSucceed] = useState("gold");
   const friend = require("../assets/images/refer_a_friend.png");
-  const image = require("../assets/images/gift.png");
+  const image = { uri: 'https://cdn-icons-png.flaticon.com/512/1213/1213709.png' }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -100,7 +100,7 @@ const Dashboard: React.FC = ({ navigation }: any) => {
           <Text style={styles.label}>Coins Collected: {Point}🪙 </Text>
         </Card>
         <Card style={styles.card}>
-          <Text style={styles.text}>Claim Rewards! </Text>
+          <Text style={styles.text}>Claim Crypotcurrency </Text>
           <ImageBackground
             source={image}
             resizeMode="cover"
@@ -219,10 +219,9 @@ const styles = StyleSheet.create({
     marginLeft: 0,
   },
   giftImage: {
-    height: 420,
-    width: 430,
-    marginTop: 30,
-    marginLeft: -40,
+    height: 200,
+    width: 200,
+        marginLeft: 30,
   },
   alarmCard: {
     fontSize: 20,

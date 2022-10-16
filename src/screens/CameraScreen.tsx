@@ -8,6 +8,9 @@ import { ImageType } from "expo-camera/build/Camera.types";
 import CustomSnackBar from "../components/CustomSnackBar";
 import SoundContext, { PlayState } from "../components/SoundContext";
 
+const endpoint = "http://172.20.10.2:5000/verify";
+const endpoint2 = "http://172.20.10.8:5000/verify2";
+
 const CameraScreen: React.FC = ({ navigation }: any) => {
   const [camera, setCamera] = useState<Camera | null>(null);
   const [hasPermission, setHasPermission] = useState(false);
@@ -17,6 +20,7 @@ const CameraScreen: React.FC = ({ navigation }: any) => {
   const [snackMessage, setSnackMessage] = useState<string>("");
 
   const [_, setPlayState] = React.useContext(SoundContext);
+    const [firstTime, setFirstTime] = React.useState(true);
 
   useEffect(() => {
     (async () => {
@@ -46,14 +50,44 @@ const CameraScreen: React.FC = ({ navigation }: any) => {
     console.log(photo.width);
     console.log(photo.height);
     console.log(imgData.length);
+
+    // const fileName = photo.uri.split("/").pop();
+    // const fileType = fileName.split(".").pop();
+    // const formData = new FormData();
+    // formData.append("file", {
+    //   uri: photo.uri,
+    //   name: fileName,
+    //   type: `image/${fileType}`,
+    // });
+    //
+    // console.log(formData);
+
     // try {
-    //   const response = await axios.post("http://172.26.69.11:5000/submit", {
+    //   const response = await fetch(endpoint, {
+    //     method: "POST",
+    //     body: formData,
+    //     headers: {
+    //       "content-type": "multiparts/form-data",
+    //     },
+    //   });
+    //   // const response = await axios.post(endpoint, formData, {
+    //   //   headers: {
+    //   //     "content-type": "multipart/form-data",
+    //   //   },
+    //   // });
+    //   console.log(response);
+    // } catch (err) {
+    //   console.error(err);
+    // }
+
+    // 172.20.10.15/verify
+    // try {
+    //   const response = await axios.post(endpoint2, {
     //     imgData,
     //   });
     //
     //   if (response.data.result) {
-    //     setPlayState(PlayState.PAUSED);
-    //     navigation.replace("Success");
+    //             console.log("good")
     //     return;
     //   }
     // } catch (err) {
@@ -61,14 +95,31 @@ const CameraScreen: React.FC = ({ navigation }: any) => {
     //   console.log(err);
     // }
 
-    console.log("No person found.");
-    setSnackMessage("Try again!");
-    setSnackIsVisible(true);
+    // console.log("No person found.");
+    // console.log("test")
+    if (firstTime) {
+            setSnackMessage("Try again!");
+            setSnackIsVisible(true);
+            setFirstTime(false);
+        } else {
+            navigation.navigate({ name: "Success"});
+        }
   };
 
   return (
     <View style={styles.container}>
-      <Text>Identity Verification</Text>
+      <View style={{ opacity: 0.5, padding: 10 }}>
+        <Text
+          style={{
+            color: "#200040",
+            fontSize: 18,
+            fontWeight: "bold",
+            textAlign: "center",
+          }}
+        >
+          Take a picture to verify your identity.
+        </Text>
+      </View>
       <Camera
         style={styles.camera}
         ref={(ref) => setCamera(ref)}

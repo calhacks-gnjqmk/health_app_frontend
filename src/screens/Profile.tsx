@@ -15,7 +15,7 @@ const Profile: React.FC = ({ navigation }) => {
                 uri: "https://media-exp1.licdn.com/dms/image/C4D03AQFPjoSN1SeT-w/profile-displayphoto-shrink_800_800/0/1641088977909?e=2147483647&v=beta&t=z9RIZbhvK24X2jdAUEBZ18j0bnH50_w3XqWsgPTnSV4",
               }}
             />
-            <Text style={styles.bigTitle}>Jackie Chan</Text>
+            <Text style={styles.bigTitle}>Tjun Jet</Text>
           </View>
           <View style={[styles.container, styles.inputContainer]}>
             <Button mode="contained">Update Email</Button>

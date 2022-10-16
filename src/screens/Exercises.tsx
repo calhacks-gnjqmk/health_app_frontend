@@ -21,7 +21,7 @@ const Exercises: React.FC = ({ navigation }: any) => {
             <TouchableOpacity
               accessibilityRole="button"
               style={styles.exerciseButton}
-                            onPress={() => navigation.navigate("Camera")}
+              onPress={() => navigation.navigate("Identity Verification")}
             >
               <View style={{ display: "flex" }}>
                 <ImageBackground
@@ -162,9 +162,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: 20,
   },
-    container: {
-        flex: 1
-    }
+  container: {
+    flex: 1,
+  },
 });
 
 export default Exercises;

@@ -8,10 +8,12 @@ import CameraScreen from "./src/screens/CameraScreen";
 import Dashboard from "./src/screens/Dashboard";
 import Exercises from "./src/screens/Exercises";
 import Profile from "./src/screens/Profile";
+import Success from "./src/screens/Success";
 
-const routes = [{ title: "Dashboard", route: "Dashboard", icon: "dashboard" },
-    { title: "Exercises", route: "Exercises", icon: "sports-baseball" },
-    { title: "Profile", route: "Profile", icon: "person" },
+const routes = [
+  { title: "Dashboard", route: "Dashboard", icon: "dashboard" },
+  { title: "Exercises", route: "Exercises", icon: "sports-baseball" },
+  { title: "Profile", route: "Profile", icon: "person" },
 ];
 
 function TabBar({ state, descriptors, navigation }) {
@@ -71,32 +73,15 @@ export default function App() {
           <BottomTabs.Screen name="Dashboard" component={Dashboard} />
           <BottomTabs.Screen name="Exercises" component={Exercises} />
           <BottomTabs.Screen name="Profile" component={Profile} />
-          <BottomTabs.Screen name="Camera" component={CameraScreen} />
+          <BottomTabs.Screen
+            name="Identity Verification"
+            component={CameraScreen}
+          />
+          <BottomTabs.Screen
+            name="Success"
+            component={Success}
+          />
         </BottomTabs.Navigator>
-        {/*
-        <Stack.Navigator initialRouteName="Navigation">
-          <Stack.Screen
-            name="Navigation"
-            component={Navigation}
-            options={{ title: "Navigation" }}
-          />
-          <Stack.Screen
-            name="Login"
-            component={Login}
-            options={{ title: "Login" }}
-          />
-          <Stack.Screen
-            name="Register"
-            component={Register}
-            options={{ title: "Register" }}
-          />
-          <Stack.Screen
-            name="Dashboard"
-            component={Dashboard}
-            options={{ title: "Dashboard" }}
-          />
-        </Stack.Navigator>
-        */}
       </NavigationContainer>
     </PaperProvider>
   );
