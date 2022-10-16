@@ -1,73 +1,58 @@
+import { MaterialIcons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
-import { Text, TouchableOpacity, View } from "react-native";
-import {
-  Button,
-  MD3LightTheme,
-  Provider as PaperProvider,
-} from "react-native-paper";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { MD3LightTheme, Provider as PaperProvider } from "react-native-paper";
+import CameraScreen from "./src/screens/CameraScreen";
 import Dashboard from "./src/screens/Dashboard";
-import Login from "./src/screens/Login";
-import Navigation from "./src/screens/Navigation";
-import Register from "./src/screens/RegisterScreen";
-import { RootStackParamList } from "./src/screenTypes";
+import Exercises from "./src/screens/Exercises";
+import Profile from "./src/screens/Profile";
 
-const Stack = createNativeStackNavigator<RootStackParamList>();
-
-const routes = [
-    { title: 'Dashboard', route: 'Dashboard' }
-]
+const routes = [{ title: "Dashboard", route: "Dashboard", icon: "dashboard" },
+    { title: "Exercises", route: "Exercises", icon: "sports-baseball" },
+    { title: "Profile", route: "Profile", icon: "person" },
+];
 
 function TabBar({ state, descriptors, navigation }) {
   return (
     <View style={{ flexDirection: "row" }}>
-      {state.routes.map((route, index) => {
-        const { options } = descriptors[route.key];
-        const label =
-          options.tabBarLabel !== undefined
-            ? options.tabBarLabel
-            : options.title !== undefined
-            ? options.title
-            : route.name;
-
+      {routes.map((route, index) => {
+        const label = route.title;
         const isFocused = state.index === index;
-
         const onPress = () => {
           const event = navigation.emit({
             type: "tabPress",
-            target: route.key,
+            target: route.route,
             canPreventDefault: true,
           });
 
           if (!isFocused && !event.defaultPrevented) {
             // The `merge: true` option makes sure that the params inside the tab screen are preserved
-            navigation.navigate({ name: route.name, merge: true });
+            navigation.navigate({ name: route.route, merge: true });
           }
         };
 
         const onLongPress = () => {
           navigation.emit({
             type: "tabLongPress",
-            target: route.key,
+            target: route.route,
           });
         };
+
+        const color = isFocused ? "#673ab7" : "#222";
 
         return (
           <TouchableOpacity
             accessibilityRole="button"
             accessibilityState={isFocused ? { selected: true } : {}}
-            accessibilityLabel={options.tabBarAccessibilityLabel}
-            testID={options.tabBarTestID}
             onPress={onPress}
             onLongPress={onLongPress}
-            style={{ flex: 1 }}
+            style={styles.appBarEntry}
             key={index}
           >
-            <Text style={{ color: isFocused ? "#673ab7" : "#222" }}>
-              {label}
-            </Text>
+            <MaterialIcons name={route.icon} size={24} color={color} />
+            <Text style={{ color }}>{label}</Text>
           </TouchableOpacity>
         );
       })}
@@ -84,6 +69,9 @@ export default function App() {
       <NavigationContainer>
         <BottomTabs.Navigator tabBar={(props) => <TabBar {...props} />}>
           <BottomTabs.Screen name="Dashboard" component={Dashboard} />
+          <BottomTabs.Screen name="Exercises" component={Exercises} />
+          <BottomTabs.Screen name="Profile" component={Profile} />
+          <BottomTabs.Screen name="Camera" component={CameraScreen} />
         </BottomTabs.Navigator>
         {/*
         <Stack.Navigator initialRouteName="Navigation">
@@ -113,3 +101,18 @@ export default function App() {
     </PaperProvider>
   );
 }
+
+const styles = StyleSheet.create({
+  appBarEntry: {
+    flex: 1,
+    paddingVertical: 15,
+    flexDirection: "column",
+    alignContent: "center",
+    alignItems: "center",
+  },
+  appBar: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignContent: "center",
+  },
+});
